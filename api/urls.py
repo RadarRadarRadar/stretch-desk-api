@@ -1,11 +1,11 @@
 from django.urls import path
-from .views.mango_views import Mangos, MangoDetail
+from .views.stretch_views import Stretches, StretchDetail
 from .views.user_views import SignUp, SignIn, SignOut, ChangePassword
 
 urlpatterns = [
   	# Restful routing
-    path('mangos/', Mangos.as_view(), name='mangos'),
-    path('mangos/<int:pk>/', MangoDetail.as_view(), name='mango_detail'),
+    path('stretches/', Stretches.as_view(), name='stretches'),
+    path('stretches/<int:pk>/', StretchDetail.as_view(), name='stretch_detail'),
     path('sign-up/', SignUp.as_view(), name='sign-up'),
     path('sign-in/', SignIn.as_view(), name='sign-in'),
     path('sign-out/', SignOut.as_view(), name='sign-out'),
