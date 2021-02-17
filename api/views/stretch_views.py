@@ -81,7 +81,7 @@ class StretchDetail(generics.RetrieveUpdateDestroyAPIView):
         # Add owner to data object now that we know this user owns the resource
         request.data['stretch']['owner'] = request.user.id
         # Validate updates with serializer
-        data = StretchSerializer(stretch, data=request.data['stretch'])
+        data = StretchSerializer(stretch, data=request.data['stretch'], partial=True)
         if data.is_valid():
             # Save & send a 204 no content
             data.save()

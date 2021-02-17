@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from .models.stretch import Stretch
+from ..models.stretch import Stretch
 
 class StretchSerializer(serializers.ModelSerializer):
     class Meta:
