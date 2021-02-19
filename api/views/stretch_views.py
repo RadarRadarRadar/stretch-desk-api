@@ -16,9 +16,9 @@ class Stretches(generics.ListCreateAPIView):
     def get(self, request):
         """Index request"""
         # Get all the stretches:
-        # stretches = Stretch.objects.all()
+        stretches = Stretch.objects.all()
         # Filter the stretches by owner, so you can only see your owned stretches
-        stretches = Stretch.objects.filter(owner=request.user.id)
+        # stretches = Stretch.objects.filter(owner=request.user.id)
         # Run the data through the serializer
         data = StretchSerializer(stretches, many=True).data
         return Response({ 'stretches': data })
@@ -37,6 +37,19 @@ class Stretches(generics.ListCreateAPIView):
         # If the data is not valid, return a response with the errors
         return Response(stretch.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class MyStretches(generics.ListCreateAPIView):
+    permission_classes=(IsAuthenticated,)
+    serializer_class = StretchSerializer
+    def get(self, request):
+        """Index request"""
+        # Get all the stretches:
+        # stretches = Stretch.objects.all()
+        # Filter the stretches by owner, so you can only see your owned stretches
+        stretches = Stretch.objects.filter(owner=request.user.id)
+        # Run the data through the serializer
+        data = StretchSerializer(stretches, many=True).data
+        return Response({ 'stretches': data })
+
 class StretchDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes=(IsAuthenticated,)
     def get(self, request, pk):
@@ -44,8 +57,8 @@ class StretchDetail(generics.RetrieveUpdateDestroyAPIView):
         # Locate the stretch to show
         stretch = get_object_or_404(Stretch, pk=pk)
         # Only want to show owned stretches?
-        if not request.user.id == stretch.owner.id:
-            raise PermissionDenied('Unauthorized, you do not own this stretch')
+        # if not request.user.id == stretch.owner.id:
+        #     raise PermissionDenied('Unauthorized, you do not own this stretch')
 
         # Run the data through the serializer so it's formatted
         data = StretchSerializer(stretch).data
